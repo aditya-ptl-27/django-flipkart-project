@@ -1,0 +1,128 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+	
+</head>
+
+<body>
+
+	
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>My Orders</h1>
+					<nav class="d-flex align-items-center">
+						<a href="{% url 'index' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="{% url 'confirmation' %}">My Orders</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Order Details Area =================-->
+	<section class="order_details section_gap">
+		<div class="container">
+			<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+			<!-- <div class="row order_d_inner">
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Order Info</h4>
+						<ul class="list">
+							<li><a href="#"><span>Order number</span> : 60235</a></li>
+							<li><a href="#"><span>Date</span> : Los Angeles</a></li>
+							<li><a href="#"><span>Total</span> : USD 2210</a></li>
+							<li><a href="#"><span>Payment method</span> : Check payments</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div> -->
+			<section class="confirmation_area">
+        <div class="container">
+            <div class="confirmation_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        {% for i in carts %}
+                        <tbody>
+                            <tr>
+                                
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <a href="{% url 'product_detail' pk=i.product.pk %}">
+                                            <img src="{{i.product.product_image.url}}" alt="" style="width: 150px;height: 150px;">
+                                        </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{i.product.product_name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>Rs.{{i.product_price}}</h5>
+                                </td>
+                                <td>
+
+                                    <div class="product_count">
+                                         <form method="post" action="{% url 'change_qty' pk=i.pk %}">
+                                            {% csrf_token %}
+                                        <input type="number" name="product_qty" id="sst" maxlength="12" value="{{i.product_qty}}" title="Quantity:"
+                                            class="input-text qty" readonly>
+                                        </form>
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>Rs.{{i.total_price}}</h5>
+                                </td>
+                            
+                            </tr>
+                            {% endfor %}
+                            
+                         
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h3>Subtotal</h3>
+                                </td>
+                                <td>
+                                    <h3>Rs.{{net_price}}</h3>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+		</div>
+	</section>
+	<!--================End Order Details Area =================-->
+
+</body>
+
+</html>
+{% endblock %}

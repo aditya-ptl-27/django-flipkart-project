@@ -1,0 +1,151 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+	
+</head>
+
+<body>
+
+	
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>SignUp</h1>
+					<nav class="d-flex align-items-center">
+						<a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="{% url 'signup' %}">SignUp</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Contact Area =================-->
+	<section class="contact_area section_gap_bottom">
+		
+		<div class="container">
+			<br><br><br><br>
+			<div class="row">
+				<div class="col-lg-9">
+					{% if msg %}
+						<b style="color:blue;">{{msg}}</b>
+					{% endif %}
+					<span id="email_error" style="color:blue;"></span>
+					<form class="row contact_form" action="{% url 'signup' %}" method="post" novalidate="novalidate" enctype="multipart/form-data">
+						{% csrf_token %}
+						<div class="col-md-6">
+							<div class="form-group">
+								<select name="usertype" class="form-control">
+									<option>---Select User Type---</option>
+									<option value="user">User</option>
+									<option value="buyer">Seller</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="name"  value="{{user.fname}}" name="fname" placeholder="Enter First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter First Name'">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="name" value="{{user.lname}}" name="lname" placeholder="Enter Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Last Name'">
+							</div>
+							<div class="form-group">
+								<input type="email" class="form-control" id="email" value="{{user.email}}" name="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="mobile" value="{{user.mobile}}" name="mobile" placeholder="Enter Mobile" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Mobile'">
+							</div>
+
+							<div class="form-group">
+								<input type="file" class="form-control" id="img" name="profile_pic" >(Choose a Profile Pic)
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<textarea class="form-control" name="address" rows="1" placeholder="Enter Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Address'">{{user.address}}</textarea>
+							</div>
+
+						
+							<div class="form-group">
+									<input type="password" class="form-control" id="pass" name="password" placeholder="Enter Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Password'">
+							</div>
+							<div class="form-group">
+									<input type="password" class="form-control" id="pass" name="cpassword" placeholder="Enter Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Confirm Password'">
+							</div>
+						</div>
+						<div class="col-md-8 text-right">
+							<button type="submit" value="submit" class="primary-btn">Sign Up</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================Contact Area =================-->
+
+	
+
+	<!--================Contact Success and Error message Area =================-->
+	<div id="success" class="modal modal-message fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="fa fa-close"></i>
+					</button>
+					<h2>Thank you</h2>
+					<p>Your message is successfully sent...</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modals error -->
+
+	<div id="error" class="modal modal-message fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="fa fa-close"></i>
+					</button>
+					<h2>Sorry !</h2>
+					<p> Something went wrong </p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Contact Success and Error message Area =================-->
+
+<script>
+	$("#email").change(function(){
+		var email=$(this).val();
+
+		$.ajax({
+			url:'ajax/validate_email/',
+			data: {
+				'email': email
+			},
+			dataType: 'json',
+			success: function (data) {
+				if (data.is_taken) {
+				/*document.getElementById("email").style.border="5px solid red";*/
+				document.getElementById("email_error").innerHTML="This Email ID Is Already Registered"
+			}else{
+				/*document.getElementById("email").style.border="5px solid green";*/
+			}
+		}
+	});
+	});
+</script>
+	
+</body>
+
+</html>
+{% endblock %}
