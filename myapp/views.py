@@ -102,10 +102,14 @@ def remove_from_cart(request,pk):
 def change_qty(request,pk):
 	cart=Cart.objects.get(pk=pk)
 	product_qty=int(request.POST['product_qty'])
-	cart.product_qty=product_qty
-	cart.total_price=cart.product_price*product_qty
-	cart.save()
-	return redirect('cart')
+	if product_qty==0:
+		cart.delete()
+		return redirect('cart')
+	else:
+		cart.product_qty=product_qty
+		cart.total_price=cart.product_price*product_qty
+		cart.save()
+		return redirect('cart')
 
 
 def checkout(request):

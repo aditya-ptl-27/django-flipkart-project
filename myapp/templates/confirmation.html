@@ -29,6 +29,7 @@
 	<!-- End Banner Area -->
 
 	<!--================Order Details Area =================-->
+{% if carts %}
 	<section class="order_details section_gap">
 		<div class="container">
 			<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
@@ -121,7 +122,16 @@
 		</div>
 	</section>
 	<!--================End Order Details Area =================-->
+  {% else %}
+    <br><br>
+    <center>
+        <img src="{% static 'img/empty_cart.png' %}" style="width: 300px;height: 200px;">
+        <br><br>
+                            <h1>No Orders Found</h1>
+                            {% endif %}
 
+</center>
+<br><br><br><br><br><br>
 </body>
 
 </html>
