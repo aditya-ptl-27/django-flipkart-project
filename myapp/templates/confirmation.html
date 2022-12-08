@@ -22,6 +22,7 @@
 						<a href="{% url 'index' %}">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="{% url 'confirmation' %}">My Orders</a>
 					</nav>
+
 				</div>
 			</div>
 		</div>
@@ -29,6 +30,12 @@
 	<!-- End Banner Area -->
 
 	<!--================Order Details Area =================-->
+<center>
+     <br>
+                    <h5>If No Orders Found Then Please Click On Refresh</h5>
+                    <br>
+                    <a class="btn btn-primary" href="{% url 'confirmation' %}">Refresh Page</a>
+        </center>
 {% if carts %}
 	<section class="order_details section_gap">
 		<div class="container">

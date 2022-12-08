@@ -64,18 +64,19 @@
 					{% for i in products %}
 					<div class="col-lg-3 col-md-6">
 						<div class="single-product">
+							<a href="{% url 'product_detail' pk=i.pk %}">
 							<img class="img-fluid" src="{{i.product_image.url}}" alt="" style="width: 200px;height: 200px;">
 							<div class="product-details">
 								<h6>{{i.product_name}}</h6>
 								<div class="price">
-									<h6>{{i.product_price}}</h6>
+									<h6>Rs. {{i.product_price}}</h6>
 									
 								</div>
 								<div class="prd-bottom">
-
+									{% if request.session.email %}
 									<a href="{% url 'add_to_cart' pk=i.pk %}" class="social-info">
 										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
+										<p class="hover-text">Add to bag</p>
 									</a>
 									<a href="{% url 'add_to_wishlist' pk=i.pk %}" class="social-info">
 										<span class="lnr lnr-heart"></span>
@@ -84,8 +85,16 @@
 									
 									<a href="{% url 'product_detail' pk=i.pk %}" class="social-info">
 										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
+										<p class="hover-text">View more</p>
 									</a>
+									{% else %}
+									<a href="{% url 'product_detail' pk=i.pk %}" class="social-info">
+										<span class="lnr lnr-move"></span>
+										<p class="hover-text">View more</p>
+									</a>
+
+									{% endif %}
+
 								</div>
 							</div>
 						</div>
