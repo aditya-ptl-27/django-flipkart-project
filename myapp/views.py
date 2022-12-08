@@ -476,4 +476,4 @@ def callback(request):
         else:
             received_data['message'] = "Checksum Mismatched"
             return render(request, 'callback.html', context=received_data)
-        return render(request, 'callback.html', context=received_data)
+        return render(request, 'confirmation.html', context=received_data)
