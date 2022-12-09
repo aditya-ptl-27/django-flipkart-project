@@ -12,7 +12,7 @@ from django.http import JsonResponse
 def validate_email(request):
 	email=request.GET.get('email')
 	data={
-		'is_taken':User.objects.filter(email__isexact=email).exists()
+		'is_taken':User.objects.filter(email__iexact=email).exists()
 	}
 	return JsonResponse(data)
 
@@ -118,7 +118,7 @@ def checkout(request):
 def confirmation(request):
 	net_price=0
 	user=User.objects.get(email=request.session['email'])
-	carts=Cart.objects.filter(user=user,payment_status=True)
+	carts=Cart.objects.filter(user=user,payment_status=True).order_by("-id")[:3]
 	for i in carts:
 		net_price=net_price+i.total_price
 	return render(request,'confirmation.html',{'carts':carts,'net_price':net_price})
@@ -441,7 +441,7 @@ def initiate_payment(request):
         # ('EMAIL', request.user.email),
         # ('MOBILE_N0', '9911223388'),
         ('INDUSTRY_TYPE_ID', settings.PAYTM_INDUSTRY_TYPE_ID),
-        ('CALLBACK_URL', 'http://127.0.0.1:8000/callback/'),
+        ('CALLBACK_URL', 'http://adityaptl27.pythonanywhere.com/callback/'),
         # ('PAYMENT_MODE_ONLY', 'NO'),
         )
 	paytm_params = dict(params)
